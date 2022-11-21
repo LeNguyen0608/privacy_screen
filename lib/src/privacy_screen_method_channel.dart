@@ -27,6 +27,7 @@ class MethodChannelPrivacyScreen extends PrivacyScreenPlatform {
             iosOptions.lockTrigger == IosLockTrigger.didEnterBackground,
         'privacyImageName': iosOptions.privacyImageName,
         'blurEffect': blurEffect.name,
+        'privacyContentMode': iosOptions.privacyContentMode.name,
         'backgroundColor':
             '#${backgroundColorSolid.value.toRadixString(16).substring(2, 8)}',
         'backgroundOpacity': backgroundOpacity,

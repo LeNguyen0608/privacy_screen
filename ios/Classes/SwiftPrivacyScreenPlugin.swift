@@ -17,7 +17,7 @@ public class SwiftPrivacyScreenPlugin: NSObject, FlutterPlugin {
     var autoLockAfterSeconds: Double = -1
     var blurEffect: UIBlurEffect.Style?
     var lockedDismissDelay: CFTimeInterval = 0.2
-    
+    var privacyContentMode: UIImageView.ContentMode?
     
     internal let registrar: FlutterPluginRegistrar
     
@@ -63,7 +63,7 @@ public class SwiftPrivacyScreenPlugin: NSObject, FlutterPlugin {
             if ( !(privacyImageName ?? "").isEmpty) {
                 let logoView = UIImageView(image: UIImage(named: privacyImageName!))
                 logoView.frame = window.bounds
-                logoView.contentMode = .center
+                logoView.contentMode = privacyContentMode!
                 privacyUIView!.addSubview(logoView)
             }
             
@@ -210,6 +210,41 @@ public class SwiftPrivacyScreenPlugin: NSObject, FlutterPlugin {
                     self.lockWithDidEnterBackground = lockWithDidEnterBackground
                 } else {
                     self.lockWithDidEnterBackground = true
+                }
+
+                if let privacyContentMode = args["privacyContentMode"] as? String {
+                    switch privacyContentMode {
+                    case "scaleToFill":
+                        self.privacyContentMode = UIView.ContentMode.scaleToFill
+                    case "scaleAspectFit":
+                        self.privacyContentMode = UIView.ContentMode.scaleAspectFit
+                    case "scaleAspectFill":
+                        self.privacyContentMode = UIView.ContentMode.scaleAspectFill
+                    case "redraw":
+                        self.privacyContentMode = UIView.ContentMode.redraw
+                    case "center":
+                        self.privacyContentMode = UIView.ContentMode.center
+                    case "top":
+                        self.privacyContentMode = UIView.ContentMode.top
+                    case "bottom":
+                        self.privacyContentMode = UIView.ContentMode.bottom
+                    case "left":
+                        self.privacyContentMode = UIView.ContentMode.left
+                    case "right":
+                        self.privacyContentMode = UIView.ContentMode.right
+                    case "topLeft":
+                        self.privacyContentMode = UIView.ContentMode.topLeft
+                    case "topRight":
+                        self.privacyContentMode = UIView.ContentMode.topRight
+                    case "bottomLeft":
+                        self.privacyContentMode = UIView.ContentMode.bottomLeft
+                    case "bottomRight":
+                        self.privacyContentMode = UIView.ContentMode.bottomRight
+                    default:
+                        self.privacyContentMode = UIView.ContentMode.center
+                    }
+                } else {
+                    self.privacyContentMode = UIView.ContentMode.center
                 }
             }
             result(true)
